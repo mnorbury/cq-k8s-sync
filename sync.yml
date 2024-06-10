@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cloudquery
+  namespace: sync
+  labels:
+    app: cloudquery
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: cloudquery
+              image: ghcr.io/cloudquery/cloudquery:latest
+              imagePullPolicy: IfNotPresent
+              args: ["sync", "/source/source.yml", "/destination/destination.yml", "--log-console", "--log-format", "json"]
+              env:
+                - name: POSTGRESQL_CONNECTION_STRING
+                  value: "test"
+              volumeMounts:
+              - name: source
+                mountPath: "/source"
+                readOnly: true
+              - name: destination
+                mountPath: "/destination"
+                readOnly: true
+          restartPolicy: Never
+          volumes:
+          - name: source
+            configMap:
+              name: source
+              items:
+              - key: "source.yml"
+                path: "source.yml"
+          - name: destination
+            configMap:
+              name: destination
+              items:
+              - key: "destination.yml"
+                path: "destination.yml"
