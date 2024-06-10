@@ -16,9 +16,9 @@ spec:
               image: ghcr.io/cloudquery/cloudquery:latest
               imagePullPolicy: IfNotPresent
               args: ["sync", "/source/source.yml", "/destination/destination.yml", "--log-console", "--log-format", "json"]
-              env:
-                - name: POSTGRESQL_CONNECTION_STRING
-                  value: "test"
+              env-from:
+                - secretRef:
+                    name: sync-secrets
               volumeMounts:
               - name: source
                 mountPath: "/source"
