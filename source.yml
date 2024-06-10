@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  source.yml: |
+    kind: source
+    spec:
+      name: "xkcd"
+      path: "cloudquery/xkcd"
+      version: "v1.0.2"
+      tables: ["xkcd_comics"]
+      destinations:
+        - "postgresql"
+      spec:
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: source
+  namespace: sync
