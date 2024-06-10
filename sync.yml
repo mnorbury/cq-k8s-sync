@@ -16,7 +16,7 @@ spec:
               image: ghcr.io/cloudquery/cloudquery:latest
               imagePullPolicy: IfNotPresent
               args: ["sync", "/source/source.yml", "/destination/destination.yml", "--log-console", "--log-format", "json"]
-              env-from:
+              envFrom:
                 - secretRef:
                     name: sync-secrets
               volumeMounts:
