@@ -13,6 +13,7 @@ kind create cluster --name cq-k8s-sync
 2. Install ArgoCD
 
 ```bash
+brew install argocd
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
